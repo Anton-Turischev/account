@@ -1,0 +1,25 @@
+version: '3.1'
+services:
+  app:
+    container_name: account_test
+    image: account_test
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dbpostgresql
+
+  dbpostgresql:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=account
+      - PGDATA=/tmp
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+volumes:
+      pgdata:
+        driver: local
